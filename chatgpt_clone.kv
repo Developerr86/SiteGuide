@@ -1,0 +1,26 @@
+#:kivy 2.0.0
+
+<ChatInterface>:
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.95, 0.95, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Button>:
+    background_color: 0.2, 0.2, 0.2, 1
+    background_normal: ''
+    color: 1, 1, 1, 1
+    size_hint_y: None
+    height: '40dp'
+    border_radius: [5]
+
+<TextInput>:
+    background_color: 1, 1, 1, 1
+    cursor_color: 0, 0, 0, 1
+    foreground_color: 0, 0, 0, 1
+    padding: [10, 10]
+    size_hint_y: None
+    height: '40dp'
+    multiline: False 
