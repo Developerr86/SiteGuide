@@ -1,0 +1,491 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.chatContainer {
+    width: 90%;
+    height: 90vh;
+    max-width: none;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.chatContainer ::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 225, 255, 0.5), rgba(255, 240, 240, 0.5));
+    z-index: 0;
+    border-radius: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.header .logo {
+    font-weight: bold;
+}
+
+.header .profile {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.quick-actions {
+    display: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+#chatMessages {
+    flex-grow: 1;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    position: relative;
+    font-size: 1em;
+    /* Base font size */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.user-message {
+    background-color: #e0f7fa;
+    align-self: flex-end;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.bot-message {
+    background-color: #f0f0f0;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Mic Button Styles in INPUT AREA */
+#mic-button-inputContainer {
+    background-color: #eee;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* No hover effect needed here */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+#mic-button-inputContainer svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Styles for the Toggle Button - sun/moon icon */
+.toggle-dark-mode {
+    background-color: #eee;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toggle-dark-mode svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Bottom Left Icon (Sidebar Trigger) */
+.bottom-left-icon {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+/* Sidebar Styles (Slide-In Window) */
+#sidebar {
+    position: fixed;
+    bottom: 60px;
+    /* Align with bottom left icon (adjust) */
+    left: 20px;
+    width: 80%;
+    /* Responsive width */
+    max-width: 300px;
+    /* Adjust as needed */
+    max-height: 60vh;
+    /*Height */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 11;
+    transform: translateX(-110%);
+    /* initially hidden (left) */
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+    /* Transition & Background */
+}
+
+#sidebar.open {
+    display: flex;
+    /* make it visible */
+    transform: translateX(0);
+    /* slide in */
+}
+
+/* Sidebar Close Button */
+.sidebar-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #666;
+    line-height: 1;
+    /* Add this line */
+    padding: 0;
+    /*Add this line*/
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+#sidebar {
+    width: 300px;
+    /* Adjust the width */
+    padding-top: 30px;
+    /* Add more space on top */
+}
+
+.sidebar-close-button {
+    font-size: 2em;
+    /*Increased font size of the 'X'*/
+}
+
+/* Overlay (Optional - for darkened background) */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    /* Below sidebar, above main content */
+    display: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+#overlay.open {
+    display: block;
+}
+
+.sidebar-button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    /*adjust the button width*/
+    text-align: left;
+    /* Aligns text to the left */
+    font-size: 1em;
+    /* Responsive font size */
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Center the contents horizontally */
+    gap: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    background: none;
+    /*Remove background property to match your prompt and for it to be transparent*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 80%;
+    /* Make it responsive */
+    max-width: 500px;
+    margin: 10px auto;
+    display: flex;
+    /* All the content in the same row */
+    flex-wrap: wrap;
+    /* Allow to wrap on smaller screens */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.inputContainer .icon-button {
+    background-color: #eee;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+}
+
+.inputContainer input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1em;
+    color: #555;
+    min-width: 100px;
+    /* Ensure it doesn't collapse on smaller screens */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Transition */
+    background: transparent;
+    /* Make input transparent */
+}
+
+.inputContainer .sendButton {
+    background-color: #FFA07A;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    /* Smooth transition for glow effect */
+}
+
+.inputContainer .sendButton:hover {
+    box-shadow: 0 0 10px #FFA07A;
+    /* Glow effect */
+    cursor: pointer;
+}
+
+/*Media queries for smaller screens*/
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #sidebar {
+        width: 90%;
+        /* Take more width on smaller screen */
+        left: 5%;
+        /* Center it */
+        padding: 10px;
+    }
+
+    .inputContainer {
+        width: 90%;
+        font-size: 0.9em;
+        /* Smaller font on small screens */
+        flex-direction: row;
+        /* Force row even on small screens */
+    }
+
+    .bottom-left-icon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    /*Tiny screens*/
+    .message {
+        font-size: 0.85em;
+    }
+
+    .inputContainer {
+        flex-direction: row;
+        /*Force buttons onto a single line on smaller screen. */
+        align-items: center;
+        /*Vertically aligned for all */
+        flex-wrap: wrap;
+        /*Allow buttons to wrap if they overflow. */
+        justify-content: center;
+
+    }
+
+    .inputContainer .icon-button,
+    #mic-button-inputContainer,
+    .inputContainer .sendButton {
+        margin-bottom: 5px;
+        /*Some space around the button.*/
+    }
+
+    .inputContainer input {
+        flex-grow: 1;
+        /*Make sure input will take the remainded width. */
+        min-width: 50%;
+        margin-bottom: 5px;
+
+    }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #eee;
+    /* Adjusted text color */
+}
+
+.chatContainer .dark-mode {
+    background-color: #333;
+    color: #eee;
+}
+
+.chatContainer .dark-mode::before {
+    background: linear-gradient(135deg, rgba(51, 51, 51, 0.5), rgba(68, 68, 68, 0.5));
+}
+
+.header.dark-mode {
+    color: #eee;
+}
+
+.user-message.dark-mode {
+    background-color: white;
+    /* Force white background */
+    color: black;
+    /* Force black text */
+}
+
+/*Force bot message to black and white and not be able to be changed. */
+.bot-message.dark-mode {
+    background-color: #444 !important;
+    color: #eee;
+}
+
+#sidebar.dark-mode {
+    background-color: #444;
+    color: #eee;
+}
+
+.inputContainer.dark-mode {
+    background: none;
+    /*Set to all default values*/
+}
+
+/*Dark theme styles for InputArea*/
+
+.inputContainer.dark-mode input {
+    background: transparent;
+    /*No background color for the input area to take action*
+       color: white;
+
+       }
+
+#overlay.dark-mode {
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Darker overlay */
+}
+
+/* Styles for the Toggle Button */
+.toggle-dark-mode {
+    background-color: #eee;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    /* For sun/moon icon positioning */
+}
+
+.toggle-dark-mode svg {
+    width: 100%;
+    height: 100%;
+}
+
+/*Style The Light Theme*/
+input::placeholder {
+    color: black;
+    /*Set color for Light Mode*/
+}
+
+/*Style The DarkTheme*/
+body.dark-mode input::placeholder {
+    color: white;
+    /*Set color for Dark mode*/
+}
